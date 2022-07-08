@@ -8,13 +8,13 @@ import java.util.*;
 public class Player {
     private Weapon Weapon;
     private String Name;
-    private int Level;
+    private int Level = 0;
     private int ArmorClass = 15;
-    private int Experience;
+    private int Experience = 0;
     private int HealthPoints = 50;
-    private int Strength;
-    private int Dexterity;
-    private int Constitution;
+    private int Strength = 0;
+    private int Dexterity = 0;
+    private int Constitution = 0;
     private Date CreationDate = new Date();
 
     Player(final Weapon weapon, final String name, final int level, final int ac, final int e, final int hp,
@@ -29,8 +29,20 @@ public class Player {
         this.Dexterity = dex;
         this.Constitution = con;
     }
-    Player()
-    {
+
+    Player(final Weapon weapon, final String name,
+            final int s, final int dex, final int con) {
+        this.Weapon = weapon;
+        this.Name = name;
+        this.HealthPoints += returnModifier(con);
+        this.Strength = s;
+        this.Dexterity += returnModifier(dex);
+        this.Constitution += con;
+    }
+
+    Player(String name, Weapon weapon) {
+        this.Name = name;
+        this.Weapon = weapon;
         this.randomizeStats();
     }
 
@@ -76,16 +88,16 @@ public class Player {
     /**
      * Randomizes a charecters stats
      */
-    public void randomizeStats(){
+    public void randomizeStats() {
         int points = 10;
         Random generator = new Random();
         // set strength
-        this.Strength = generator.nextInt(7)+1;
+        this.Strength = generator.nextInt(7) + 1;
         points -= this.Strength;
         // set dexterity
-        if(points > 0)
-            this.Dexterity = generator.nextInt(points) +1;
-        points -=  this.Dexterity;
+        if (points > 0)
+            this.Dexterity = generator.nextInt(points) + 1;
+        points -= this.Dexterity;
         this.ArmorClass = this.ArmorClass + this.Dexterity;
         // set constitution
         this.Constitution = points;
@@ -95,14 +107,11 @@ public class Player {
 
     }
 
-
-
-    private int returnModifier(int num)
-    {
+    private int returnModifier(int num) {
         int ret = 0;
-        if(num > 5)
+        if (num > 5)
             ret = num;
-        if(num < 5)
+        if (num < 5)
             ret = num * -1;
         return ret;
     }
@@ -187,6 +196,7 @@ public class Player {
     public int getConstitution() {
         return this.Constitution;
     }
+
     /**
      * getter : Gets the Creation Date of the player
      * 
@@ -206,7 +216,7 @@ public class Player {
                 "STR: " + this.Strength + '\n' +
                 "DEX: " + this.Dexterity + '\n' +
                 "CON: " + this.Constitution + '\n' +
-                "Creation Date: " + this.CreationDate+ '\n';
+                "Creation Date: " + this.CreationDate + '\n';
     }
 
 }

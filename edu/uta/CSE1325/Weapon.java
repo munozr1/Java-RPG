@@ -4,14 +4,17 @@ package edu.uta.CSE1325;
  * Defines basic structure for a weapon.
  */
 public class Weapon {
+
     /**
      * Name of the weapon
      */
     private String Name;
+
     /**
      * String in format [NUMDICE]d[DICETYPE]
      */
     private String DiceType;
+
     /**
      * Amount of bonus damage the weapon inflicts
      */
