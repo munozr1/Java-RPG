@@ -19,7 +19,7 @@ public class Game {
     menuChoice = in.nextInt();
 
     // create weapons from file
-    Weapon[] weapons = GameUtility.createWeapons(weaponsFileName);
+    ArrayList<Weapon> weapons = GameUtility.createWeapons(weaponsFileName);
 
     // number of players created
     int charecters = 0;

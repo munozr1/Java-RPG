@@ -2,7 +2,7 @@ package edu.uta.CSE1325;
 
 import java.io.IOException;
 import java.nio.file.Path;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -30,7 +30,7 @@ public class GameUtility {
         return result;
     }
 
-    public static Player characterCreationMenu(Scanner in, Weapon[] weapons) {
+    public static Player characterCreationMenu(Scanner in, ArrayList<Weapon> weapons) {
         Player player = null;
         System.out.println("\n\n1. Manual Stats\n2. Random Stats\n3");
         // Get the user's menu choice
@@ -97,23 +97,22 @@ public class GameUtility {
     /**
      * Creates a weapons array
      */
-    public static Weapon[] createWeapons(String filename) throws IOException {
+    public static ArrayList<Weapon> createWeapons(String filename) throws IOException {
         // TODO
         String delimiter = ",";
-        Weapon[] weapons = new Weapon[1];
+        ArrayList<Weapon> weapons = new ArrayList<Weapon>();
         Scanner in = new Scanner(Path.of(filename));
-        int weaponCount = 0;
         while (in.hasNextLine()) {
             // Read the first line and split it into tokens
             String line = in.nextLine();
             String[] tokens = line.split(delimiter);
             // Create a new weapon object and add it to the array
-            weapons[weaponCount] = new Weapon(tokens[0], tokens[1], Integer.parseInt(tokens[2])); // create infinite
-                                                                                                  // weapons
-            weapons = Arrays.copyOf(weapons, weapons.length + 1);
-            weaponCount++;
+            weapons.add(new Weapon(tokens[0], tokens[1], Integer.parseInt(tokens[2]))); // create infinite
+                                                                                        // weapons
+            // weapons = Arrays.copyOf(weapons, weapons.length + 1);
         }
-        weapons = Arrays.copyOf(weapons, weaponCount); // remove the last weapon because it is null
+        // weapons = Arrays.copyOf(weapons, weaponCount); // remove the last weapon
+        // because it is null
         return weapons;
     }
 
@@ -136,12 +135,12 @@ public class GameUtility {
      * @param in Scanner object
      * @return Player object
      */
-    private static Player randomStats(Scanner in, Weapon[] weapons) {
+    private static Player randomStats(Scanner in, ArrayList<Weapon> weapons) {
         String name;
         System.out.println("Enter Character Name: ");
         name = in.nextLine();
         Random generator = new Random();
-        Weapon weapon = weapons[generator.nextInt(weapons.length)];
+        Weapon weapon = weapons.get(generator.nextInt(weapons.size()));
         return new Player(name, weapon);
     }
 }
