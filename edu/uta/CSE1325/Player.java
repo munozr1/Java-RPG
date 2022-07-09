@@ -16,6 +16,13 @@ public class Player {
     private int Dexterity = 0;
     private int Constitution = 0;
     private Date CreationDate = new Date();
+    private HashMap<String, Integer> meta = new HashMap<String, Integer>() {
+        {
+            put("armed", 1);
+            put("x", -1);
+            put("y", -1);
+        }
+    };
 
     Player(final Weapon weapon, final String name, final int level, final int ac, final int e, final int hp,
             final int s, final int dex, final int con) {
@@ -28,6 +35,7 @@ public class Player {
         this.Strength = s;
         this.Dexterity = dex;
         this.Constitution = con;
+
     }
 
     Player(final Weapon weapon, final String name,
@@ -63,6 +71,24 @@ public class Player {
         } else {
             System.out.println(this.Name + " missed!");
         }
+    }
+
+    /**
+     * Attempts to disarm a player for 2 turns
+     * 
+     * @param victim Player
+     */
+    public void dissarm(Player victim) {
+        if (GameUtility.rollDice("d20") + this.Strength > GameUtility.rollDice("d20") + victim.getStrength()) {
+            System.out.print("\n" + this.Name + " successfully disarmed: " + victim.getName());
+            victim.dissarmed();
+        } else {
+            System.out.print("\n" + this.Name + " failed to disarmed: " + victim.getName());
+        }
+    }
+
+    public void dissarmed() {
+        this.meta.put("armed", 0);
     }
 
     /**

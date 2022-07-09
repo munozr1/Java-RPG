@@ -1,0 +1,37 @@
+{
+	// Use IntelliSense to learn about possible attributes.
+	// Hover to view descriptions of existing attributes.
+	// For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+	"version": "0.2.0",
+	"configurations": [
+		{
+			"type": "java",
+			"name": "Launch Current File",
+			"request": "launch",
+			"mainClass": "${file}",
+			"args": "weapons.csv"
+		},
+		{
+			"type": "java",
+			"name": "Launch Game",
+			"request": "launch",
+			"mainClass": "edu.uta.CSE1325.Game",
+			"projectName": "phase1_7ff65f3",
+			"args": "weapons.csv"
+		},
+		{
+			"type": "java",
+			"name": "Launch PlayerTest",
+			"request": "launch",
+			"mainClass": "edu.uta.CSE1325.PlayerTest",
+			"projectName": "phase1_7ff65f3"
+		},
+		{
+			"type": "java",
+			"name": "Launch WeaponTest",
+			"request": "launch",
+			"mainClass": "edu.uta.CSE1325.WeaponTest",
+			"projectName": "phase1_7ff65f3"
+		}
+	]
+}

@@ -35,12 +35,14 @@ public class GameUtility {
         System.out.println("\n\n1. Manual Stats\n2. Random Stats\n3");
         // Get the user's menu choice
         int menuChoice = in.nextInt();
-        while (player != null) {
+        while (player == null) {
             switch (menuChoice) {
                 case 1:
-                    player = manualStats(in);
+                    System.out.print("\033[H\033[2J");
+                    player = manualStats(in, weapons);
                     break;
                 case 2:
+                    System.out.print("\033[H\033[2J");
                     player = randomStats(in, weapons);
                     break;
                 default:
@@ -60,7 +62,7 @@ public class GameUtility {
      * @param in scanner object
      * @return Player object
      */
-    public static Player manualStats(Scanner in) {
+    public static Player manualStats(Scanner in, ArrayList<Weapon> weapons) {
         String name;
         int str = 0;
         int dex = 0;
@@ -69,6 +71,7 @@ public class GameUtility {
         Weapon weapon = null;
         int menuChoice;
         System.out.println("Enter Character Name: ");
+        in.nextLine();
         name = in.nextLine();
         while (points > 0) {
             printPlayerCreationStatState(dex, con, str, points);
@@ -91,6 +94,14 @@ public class GameUtility {
                     break;
             }
         }
+        in.nextLine();
+        System.out.println("\nSelect a weapon\n");
+        int i = 0;
+        for (Weapon w : weapons) {
+            System.out.println(i + ". " + w.toString() + '\n');
+            i++;
+        }
+        weapon = weapons.get(in.nextInt());
         return new Player(weapon, name, str, dex, con);
     }
 
@@ -108,11 +119,7 @@ public class GameUtility {
             String[] tokens = line.split(delimiter);
             // Create a new weapon object and add it to the array
             weapons.add(new Weapon(tokens[0], tokens[1], Integer.parseInt(tokens[2]))); // create infinite
-                                                                                        // weapons
-            // weapons = Arrays.copyOf(weapons, weapons.length + 1);
         }
-        // weapons = Arrays.copyOf(weapons, weaponCount); // remove the last weapon
-        // because it is null
         return weapons;
     }
 
@@ -125,6 +132,7 @@ public class GameUtility {
      * @param rem int
      */
     private static void printPlayerCreationStatState(int dex, int con, int str, int rem) {
+        clearScreen();
         System.out.println("STR: " + str + "\nDEX: " + dex + "\nCON: " + con + "\nRemaining: " + rem
                 + "\n\n1. Add STR" + "\n2. Add DEX" + "\n3. Add CON" + "\n4. Reset" + "\n5. Finish");
     }
@@ -138,9 +146,16 @@ public class GameUtility {
     private static Player randomStats(Scanner in, ArrayList<Weapon> weapons) {
         String name;
         System.out.println("Enter Character Name: ");
+        in.nextLine();
         name = in.nextLine();
+        name.replace('\n', ' ');
         Random generator = new Random();
         Weapon weapon = weapons.get(generator.nextInt(weapons.size()));
         return new Player(name, weapon);
+    }
+
+    public static void clearScreen() {
+        System.out.print("\033[H\033[2J");
+        System.out.flush();
     }
 }
