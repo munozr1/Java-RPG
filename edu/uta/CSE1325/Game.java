@@ -26,18 +26,21 @@ public class Game {
     while (true) {
       switch (menuChoice) {
         case 1:
+          GameUtility.clearScreen();
           startGame();
+          // for (Player p : players) {
+          // System.out.println(p.toString());
+          // }
+          // GameUtility.clearScreen();
           for (Player p : players) {
             System.out.println(p.toString());
           }
-          GameUtility.clearScreen();
-          System.out.println("//TODO\n1. Start Game\n2. Create Charecters\n3.Exit\n\n");
+          System.out.println("\n1. Start Game\n2. Create Charecters\n3.Exit\n\n");
           menuChoice = in.nextInt();
           break;
         case 2:
           GameUtility.clearScreen();
-          final Player temp = GameUtility.characterCreationMenu(in, weapons);
-          players.add(temp);
+          createCharecters(in, players, weapons);
           GameUtility.clearScreen();
           System.out.println("1. Start Game\n2. Create Charecters\n3.Exit\n\n");
           menuChoice = in.nextInt();
@@ -56,8 +59,22 @@ public class Game {
     }
   }
 
-  private static void startGame() {
+  private static void createCharecters(Scanner in, ArrayList<Player> players, ArrayList<Weapon> weapons) {
+    Player temp = null;
+    boolean conf = false;
+    while (players.size() < 2) {
+      temp = GameUtility.characterCreationMenu(in, weapons);
+      conf = GameUtility.confirm(in);
+      if (conf) {
+        players.add(temp);
+      }
+    }
+  }
 
+  private static void startGame() {
+    GameUtility.clearScreen();
+    Map map = new Map();
+    System.out.println(map.toString());
   }
 
 }

@@ -32,28 +32,42 @@ public class GameUtility {
 
     public static Player characterCreationMenu(Scanner in, ArrayList<Weapon> weapons) {
         Player player = null;
+        clearScreen();
         System.out.println("\n\n1. Manual Stats\n2. Random Stats\n3");
         // Get the user's menu choice
         int menuChoice = in.nextInt();
-        while (player == null) {
-            switch (menuChoice) {
-                case 1:
-                    System.out.print("\033[H\033[2J");
-                    player = manualStats(in, weapons);
-                    break;
-                case 2:
-                    System.out.print("\033[H\033[2J");
-                    player = randomStats(in, weapons);
-                    break;
-                default:
-                    System.out.println("Invalid Choice\n");
-                    // Get the user's menu choice again if invalid
-                    menuChoice = in.nextInt();
-                    break;
-            }
+
+        switch (menuChoice) {
+            case 1:
+                clearScreen();
+                player = manualStats(in, weapons);
+                clearScreen();
+                System.out.println(player.toString());
+                break;
+            case 2:
+                clearScreen();
+                player = randomStats(in, weapons);
+                clearScreen();
+                System.out.println(player.toString());
+                break;
+            default:
+                System.out.println("Invalid Choice\n");
+                // Get the user's menu choice again if invalid
+                menuChoice = in.nextInt();
+                break;
         }
 
         return player;
+    }
+
+    public static boolean confirm(Scanner in) {
+        System.out.println("Confirm? (y/n)");
+        String confirmStr = in.next();
+        if (confirmStr.equals("y")) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -62,7 +76,7 @@ public class GameUtility {
      * @param in scanner object
      * @return Player object
      */
-    public static Player manualStats(Scanner in, ArrayList<Weapon> weapons) {
+    private static Player manualStats(Scanner in, ArrayList<Weapon> weapons) {
         String name;
         int str = 0;
         int dex = 0;
