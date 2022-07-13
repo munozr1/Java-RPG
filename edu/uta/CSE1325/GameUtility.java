@@ -11,6 +11,60 @@ import java.util.Scanner;
  * This class only provides static methods
  */
 public class GameUtility {
+    /**
+     * Checks if the player can move to the given location. If the location is not
+     * occupied, the player can move to the
+     * location. If the location is occupied, cannot move to the location.
+     * 
+     * Does not return until player has moved to a location.
+     */
+    public static void movePlayer(Map map, Player player, Scanner in) {
+        int x = 0, y = 0;
+        char move;
+        int moves = 0;
+        boolean validMove = true;
+        while (moves < 5) {
+            GameUtility.clearScreen();
+            System.out.println(map.toString());
+            if (!validMove) {
+                System.out.println("Invalid move. Please try again.");
+            }
+            System.out.println(
+                    player.getName() + ", where would you like to move? (up: u, down: d, left: l, right: r ): ");
+            move = in.next().charAt(0);
+            switch (move) {
+                case 'u':
+                    x = player.getX() - 1;
+                    y = player.getY();
+                    break;
+                case 'd':
+                    x = player.getX() + 1;
+                    y = player.getY();
+                    break;
+                case 'l':
+                    x = player.getX();
+                    y = player.getY() - 1;
+                    break;
+                case 'r':
+                    x = player.getX();
+                    y = player.getY() + 1;
+                    break;
+                default:
+                    System.out.println("Invalid move");
+                    break;
+            }
+
+            if (x < 0 || y < 0 || x > 25 || y > 25 || map.isOccupied(x, y)) {
+                validMove = false;
+            } else {
+                map.free(player.getX(), player.getY());
+                map.set(x, y, player);
+                player.move(x, y);
+                moves++;
+                validMove = true;
+            }
+        }
+    }
 
     /**
      * Rolls a virtual dice an x amount of times and returns the value

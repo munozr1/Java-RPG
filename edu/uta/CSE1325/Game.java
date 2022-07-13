@@ -27,16 +27,13 @@ public class Game {
       switch (menuChoice) {
         case 1:
           GameUtility.clearScreen();
-          startGame();
-          // for (Player p : players) {
-          // System.out.println(p.toString());
-          // }
-          // GameUtility.clearScreen();
-          for (Player p : players) {
-            System.out.println(p.toString());
+          if (players.size() < 2) {
+            System.out.println("Not enough players created. Please create players.");
+            System.out.println("1. Start Game\n2. Create Charecters\n3.Exit\n\n");
+            menuChoice = in.nextInt();
+            break;
           }
-          System.out.println("\n1. Start Game\n2. Create Charecters\n3.Exit\n\n");
-          menuChoice = in.nextInt();
+          startGame(players, in);
           break;
         case 2:
           GameUtility.clearScreen();
@@ -71,10 +68,15 @@ public class Game {
     }
   }
 
-  private static void startGame() {
+  private static void startGame(ArrayList<Player> players, Scanner in) {
+    boolean endgame = false;
     GameUtility.clearScreen();
     Map map = new Map();
     System.out.println(map.toString());
+    while (!endgame) {
+      GameUtility.movePlayer(map, players.get(0), in);
+      GameUtility.movePlayer(map, players.get(1), in);
+    }
   }
 
 }

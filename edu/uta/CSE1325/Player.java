@@ -16,13 +16,8 @@ public class Player {
     private int Dexterity = 0;
     private int Constitution = 0;
     private Date CreationDate = new Date();
-    private HashMap<String, Integer> meta = new HashMap<String, Integer>() {
-        {
-            put("armed", 1);
-            put("x", -1);
-            put("y", -1);
-        }
-    };
+    private int x = 0, y = 0;
+    private boolean armed;
 
     Player(final Weapon weapon, final String name, final int level, final int ac, final int e, final int hp,
             final int s, final int dex, final int con) {
@@ -67,9 +62,11 @@ public class Player {
             // TODO
             damageToInflict = rollHit();
             victim.takeDamage(damageToInflict);
-            System.out.println(this.Name + " hit " + victim.getName() + " for " + damageToInflict + " HP!");
+            System.out.println(this.getName() + "  attacks " + victim.getName() + " with " + Weapon.getName() + "( "
+                    + victim.getArmorClass() + " ) to hit...Hits!");
         } else {
-            System.out.println(this.Name + " missed!");
+            System.out.println(this.getName() + "  attacks " + victim.getName() + " with " + Weapon.getName() + "( "
+                    + victim.getArmorClass() + " ) to hit...Missed!");
         }
     }
 
@@ -87,8 +84,25 @@ public class Player {
         }
     }
 
-    public void dissarmed() {
-        this.meta.put("armed", 0);
+    /**
+     * Checks if the player is disarmed
+     */
+    public boolean dissarmed() {
+        return armed;
+
+    }
+
+    /**
+     * Moves the player to a specified location
+     * 
+     * @param map
+     * @param x
+     * @param y
+     * @return true if the player can move to the location, false otherwise
+     */
+    public void move(int x, int y) {
+        this.x = x;
+        this.y = y;
     }
 
     /**
@@ -230,6 +244,14 @@ public class Player {
      */
     public Date getCreationDate() {
         return this.CreationDate;
+    }
+
+    public int getX() {
+        return this.x;
+    }
+
+    public int getY() {
+        return this.y;
     }
 
     @Override

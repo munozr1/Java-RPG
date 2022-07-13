@@ -4,31 +4,46 @@ public class Map {
 
   Player[][] map = new Player[25][25];
 
-  Map() {
-
+  public Map() {
+    for (int i = 0; i < 25; i++) {
+      for (int j = 0; j < 25; j++) {
+        map[i][j] = null;
+      }
+    }
   }
 
   public boolean isOccupied(int x, int y) {
+    boolean occupied = true;
     if (map[x][y] == null) {
-      return false;
+      occupied = false;
     }
-    return true;
+    return occupied;
+  }
+
+  public void set(int x, int y, Player player) {
+    map[x][y] = player;
+  }
+
+  public void free(int x, int y) {
+    map[x][y] = null;
   }
 
   @Override
   public String toString() {
-    StringBuilder sb = new StringBuilder();
-    for (int i = 0; i < map.length; i++) {
-      for (int j = 0; j < map[i].length; j++) {
+
+    // Create a string of the map
+    String mapString = "";
+    for (int i = 0; i < 25; i++) {
+      for (int j = 0; j < 25; j++) {
         if (map[i][j] == null) {
-          sb.append("-");
+          mapString += ".";
         } else {
-          sb.append(map[i][j].getName());
+          mapString += map[i][j].getName().charAt(0);
         }
       }
-      sb.append("\n");
+      mapString += "\n";
     }
-    return sb.toString();
+    return mapString;
   }
 
 }
